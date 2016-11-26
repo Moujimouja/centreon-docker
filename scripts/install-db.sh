@@ -7,12 +7,12 @@ service mysql start
 httpd -k start
 
 cd /usr/share/centreon/www/install/steps/process
-cat ../../../../autoinstall.php installConfigurationDb.php | php
-cat ../../../../autoinstall.php installStorageDb.php | php
-cat ../../../../autoinstall.php createDbUser.php | php
-cat ../../../../autoinstall.php insertBaseConf.php | php
-cat ../../../../autoinstall.php configFileSetup.php | php
-cat ../../../../autoinstall.php partitionTables.php | php
+cat /usr/share/centreon/autoinstall.php installConfigurationDb.php | php
+cat /usr/share/centreon/autoinstall.php installStorageDb.php | php
+cat /usr/share/centreon/autoinstall.php createDbUser.php | php
+cat /usr/share/centreon/autoinstall.php insertBaseConf.php | php
+cat /usr/share/centreon/autoinstall.php configFileSetup.php | php
+cat /usr/share/centreon/autoinstall.php partitionTables.php | php
 cd /tmp/
 rm -rf /usr/share/centreon/www/install
 mysql -e "GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'centreon'"

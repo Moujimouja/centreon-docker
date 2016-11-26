@@ -38,24 +38,24 @@ ADD scripts/debug-script.sh /tmp/debug-script.sh
 RUN chmod +x /tmp/debug-script.sh
 RUN /tmp/debug-script.sh
 
-#ADD scripts/cbmod.sql /tmp/cbmod.sql
-#ADD scripts/install-db.sh /tmp/install-db.sh
-#ADD scripts/autoinstall.php /usr/share/centreon/autoinstall.php
-#RUN chmod +x /tmp/install-db.sh
-#RUN /tmp/install-db.sh
+ADD scripts/cbmod.sql /tmp/cbmod.sql
+ADD scripts/install-db.sh /tmp/install-db.sh
+ADD scripts/autoinstall.php /usr/share/centreon/autoinstall.php
+RUN chmod +x /tmp/install-db.sh
+RUN /tmp/install-db.sh
 
 # Install Widgets
-#RUN yum -y install centreon-widget*
+RUN yum -y install centreon-widget*
 
 
 # Set rights for setuid
-#RUN chown root:centreon-engine /usr/lib/nagios/plugins/check_icmp
-#RUN chmod -w /usr/lib/nagios/plugins/check_icmp
-#RUN chmod u+s /usr/lib/nagios/plugins/check_icmp
+RUN chown root:centreon-engine /usr/lib/nagios/plugins/check_icmp
+RUN chmod -w /usr/lib/nagios/plugins/check_icmp
+RUN chmod u+s /usr/lib/nagios/plugins/check_icmp
 
 # Install and configure supervisor
-#RUN yum -y install python-setuptools
-#RUN easy_install supervisor
+RUN yum -y install python-setuptools
+RUN easy_install supervisor
 
 # Todo better split file
 ADD scripts/supervisord.conf /etc/supervisord.conf
