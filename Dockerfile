@@ -1,11 +1,11 @@
-FROM centos:centos6
-MAINTAINER jmathis <julien.mathis@gmail.com>
+FROM centos:centos7
+MAINTAINER egautier <gautier.eti@gmail.com>
 
 # Update CentOS
 RUN yum -y update
 
 # Install Centreon Repository
-RUN yum -y install http://yum.centreon.com/standard/3.0/stable/noarch/RPMS/ces-release-3.0-1.noarch.rpm
+RUN wget http://yum.centreon.com/standard/3.4/el7/stable/centreon-stable.repo /etc/yum.repo.d/
 
 # Install ssh
 RUN yum -y install openssh-server openssh-client
@@ -38,4 +38,4 @@ ADD scripts/supervisord.conf /etc/supervisord.conf
 # Expose port SSH and HTTP for the service
 EXPOSE 22 80
 
-CMD ['/usr/bin/supervisord', '--configuration=/etc/supervisord.conf']
+CMD ["/usr/bin/supervisord","--configuration=/etc/supervisord.conf"]
