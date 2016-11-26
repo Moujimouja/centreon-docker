@@ -7,7 +7,7 @@ RUN yum install -y wget
 
 # Install Centreon Repository
 RUN wget http://yum.centreon.com/standard/3.4/el7/stable/centreon-stable.repo 
-RUN mv centreon-stable.repo /etc/yum.repo.d/
+RUN mv centreon-stable.repo /etc/yum.repo.d/centreon-stable.repo
 
 # Install ssh
 RUN yum -y install openssh-server openssh-client
