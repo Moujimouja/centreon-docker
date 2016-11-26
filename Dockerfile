@@ -16,10 +16,6 @@ RUN mv centreon-stable.repo /etc/yum.repos.d/centreon-stable.repo
 RUN wget http://yum.centreon.com/standard/3.4/el6/stable/RPM-GPG-KEY-CES 
 RUN mv RPM-GPG-KEY-CES /etc/pki/rpm-gpg/RPM-GPG-KEY-CES
 
-#Install MariaDB key
-RUN wget https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-RUN mv RPM-GPG-KEY-MariaDB /etc/pki/rpm-gpg/RPM-GPG-KEY-MariaDB
-
 
 # Install ssh
 RUN yum -y install openssh-server openssh-client
@@ -30,18 +26,19 @@ RUN sed -i 's/^#PermitRootLogin/PermitRootLogin/g' /etc/ssh/sshd_config
 
 # Install centreon
 RUN yum -y --nogpgcheck install MariaDB-server 
-RUN yum -y install centreon centreon-base-config-centreon-engine centreon-installed centreon-clapi
+RUN yum install --nogpgcheck -y centreon-base-config-centreon-engine centreon-broker* git
+RUN echo 'date.timezone = Europe/Paris' > /etc/php.d/centreon.ini
 
+
+# Create base Centreon configuration
+ADD scripts/cbmod.sql /tmp/cbmod.sql
+ADD scripts/install-db.sh /tmp/install-db.sh
+ADD scripts/autoinstall.php /usr/share/centreon/autoinstall.php
+RUN chmod +x /tmp/install-db.sh
+RUN /tmp/install-db.sh
 
 # Install Widgets
 RUN yum -y install centreon-widget-graph-monitoring centreon-widget-host-monitoring centreon-widget-service-monitoring centreon-widget-hostgroup-monitoring centreon-widget-servicegroup-monitoring
-# Fix pass in db
-ADD scripts/cbmod.sql /tmp/cbmod.sql
-
-#Obliged to make it 1 line http://stackoverflow.com/questions/25920029/setting-up-mysql-and-importing-dump-within-dockerfile
-RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
-mysql centreon < /tmp/cbmod.sql && \
- /usr/bin/centreon -u admin -p centreon -a POLLERGENERATE -v 1 && /usr/bin/centreon -u admin -p centreon -a CFGMOVE -v 1
 
 
 # Set rights for setuid
