@@ -38,7 +38,7 @@ RUN chmod +x /tmp/install-db.sh
 RUN /tmp/install-db.sh
 
 # Install Widgets
-RUN yum -y install centreon-widget-graph-monitoring centreon-widget-host-monitoring centreon-widget-service-monitoring centreon-widget-hostgroup-monitoring centreon-widget-servicegroup-monitoring
+RUN yum -y install centreon-widget*
 
 
 # Set rights for setuid

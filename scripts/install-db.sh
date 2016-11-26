@@ -13,6 +13,7 @@ cat ../../../../autoinstall.php createDbUser.php | php
 cat ../../../../autoinstall.php insertBaseConf.php | php
 cat ../../../../autoinstall.php configFileSetup.php | php
 cat ../../../../autoinstall.php partitionTables.php | php
+cd /tmp/
 rm -rf /usr/share/centreon/www/install
 mysql -e "GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'centreon'"
 mysql centreon < /tmp/cbmod.sql 
