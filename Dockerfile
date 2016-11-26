@@ -16,6 +16,9 @@ RUN mv centreon-stable.repo /etc/yum.repos.d/centreon-stable.repo
 RUN wget http://yum.centreon.com/standard/3.4/el6/stable/RPM-GPG-KEY-CES 
 RUN mv RPM-GPG-KEY-CES /etc/pki/rpm-gpg/RPM-GPG-KEY-CES
 
+#Try to by pass the systemctl problem
+RUN mkdir -p /etc/selinux/targeted/contexts/
+RUN echo '<busconfig><selinux></selinux></busconfig>' > /etc/selinux/targeted/contexts/dbus_contexts
 
 # Install ssh
 RUN yum -y install openssh-server openssh-client
@@ -31,6 +34,10 @@ RUN echo 'date.timezone = Europe/Paris' > /etc/php.d/centreon.ini
 
 
 # Create base Centreon configuration
+ADD scripts/debug-script.sh /tmp/debug-script.sh
+RUN chmod +x /tmp/debug-script.sh
+RUN /tmp/debug-script.sh
+
 ADD scripts/cbmod.sql /tmp/cbmod.sql
 ADD scripts/install-db.sh /tmp/install-db.sh
 ADD scripts/autoinstall.php /usr/share/centreon/autoinstall.php
@@ -57,3 +64,8 @@ ADD scripts/supervisord.conf /etc/supervisord.conf
 EXPOSE 22 80
 
 CMD ["/usr/bin/supervisord","--configuration=/etc/supervisord.conf"]
+
+# Main script.
+COPY scripts/start-centreon.sh /usr/share/centreon/start-centreon.sh
+RUN chmod +x /usr/share/centreon/start-centreon.sh
+ENTRYPOINT ["/usr/share/centreon/start-centreon.sh"]
