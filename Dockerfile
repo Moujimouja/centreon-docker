@@ -33,11 +33,7 @@ RUN yum install --nogpgcheck -y centreon-base-config-centreon-engine centreon-br
 RUN echo 'date.timezone = Europe/Paris' > /etc/php.d/centreon.ini
 
 
-# Create base Centreon configuration
-ADD scripts/debug-script.sh /tmp/debug-script.sh
-RUN chmod +x /tmp/debug-script.sh
-RUN /tmp/debug-script.sh
-
+# Initialize Centreon
 ADD scripts/cbmod.sql /tmp/cbmod.sql
 ADD scripts/install-db.sh /tmp/install-db.sh
 ADD scripts/autoinstall.php /usr/share/centreon/autoinstall.php
