@@ -3,6 +3,7 @@ MAINTAINER egautier <gautier.eti@gmail.com>
 
 # Update CentOS
 RUN yum -y update
+RUN yum install -y wget
 
 # Install Centreon Repository
 RUN wget http://yum.centreon.com/standard/3.4/el7/stable/centreon-stable.repo 
