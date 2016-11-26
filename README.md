@@ -5,7 +5,8 @@ Trying to create a docker image for Centreon 2.8 on CentOS 7
 
 Not working right now : see errors when building :
 
-Problem with Centreon Engine  :
+* Problem with base Centreon configuration installation
+* Problem with Centreon Engine  :
 
 ```shell
  Installing : centreon-engine-daemon-1.6.1-1.el7.centos.x86_64         235/248
@@ -16,7 +17,7 @@ Problem with Centreon Engine  :
  Created symlink from /etc/systemd/system/multi-user.target.wants/centengine.service to /etc/systemd/system/centengine.service.
 ```
 
- Problem with Centreon Broker
+ * Problem with Centreon Broker
  
 ```shell
  Installing : centreon-broker-cbd-3.0.1-1.el7.centos.x86_64            242/248
@@ -27,7 +28,7 @@ Problem with Centreon Engine  :
  Created symlink from /etc/systemd/system/multi-user.target.wants/cbd.service to /etc/systemd/system/cbd.service.
 ```
 
-Probleme during centreon installed installation :
+* Probleme during centreon installed installation :
 
 ```shell
  Installing : centreon-installed-2.8.1-8.el7.centos.noarch             247/248
